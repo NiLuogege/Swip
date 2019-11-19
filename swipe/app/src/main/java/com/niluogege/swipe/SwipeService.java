@@ -78,7 +78,7 @@ public class SwipeService extends AccessibilityService {
                 while (flag) {
                     String command = "input swipe 550 1450 550 700";
                     execShellCmd(command);
-                    int random = (int) (Math.random() * (30 - 20) + 20) * 1000;
+                    int random = (int) (Math.random() * (25 - 5) + 5) * 1000;
                     Log.e("SwipeService", "执行了一次= " + random);
                     SystemClock.sleep(random);
                 }
