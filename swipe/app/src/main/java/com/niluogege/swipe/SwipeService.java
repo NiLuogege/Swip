@@ -75,11 +75,23 @@ public class SwipeService extends AccessibilityService {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                int i = 1;
                 while (flag) {
                     String command = "input swipe 550 1450 550 700";
                     execShellCmd(command);
-                    int random = (int) (Math.random() * (25 - 5) + 5) * 1000;
+                    int random = (int) (Math.random() * (25 - 10) + 10) * 1000;
                     Log.e("SwipeService", "执行了一次= " + random);
+
+                    if (i == 5) {
+                        String back = "input keyevent 4";
+                        execShellCmd(back);
+                        i = 0;
+                        Log.e("SwipeService", "第五个 " + i);
+                        SystemClock.sleep(50);
+                    }
+
+                    i++;
+
                     SystemClock.sleep(random);
                 }
             }
