@@ -14,6 +14,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.Random;
 
 /**
  * Created by niluogege on 2019/11/19.
@@ -73,8 +74,9 @@ public class SwipeService extends AccessibilityService {
         while (flag) {
             String command = "input swipe 550 1450 550 700";
             execShellCmd(command);
-            Log.e("SwipeService", "执行了一次");
-            SystemClock.sleep(10000);
+            int random = (int) (Math.random() * (30 - 20) + 20)*1000;
+            Log.e("SwipeService", "执行了一次= " + random);
+            SystemClock.sleep(random);
         }
     }
 
