@@ -56,9 +56,14 @@ public class SwipeService extends AccessibilityService {
     public void event(String event) {
         Log.e("SwipeService", "event= " + event);
         switch (event) {
-            case "start":
+            case "start_shuabao":
                 flag = true;
-                run();
+                run_shuabao();
+                break;
+
+            case "start_weishi":
+                flag = true;
+                run_weishi();
                 break;
 
             case "stop":
@@ -70,7 +75,7 @@ public class SwipeService extends AccessibilityService {
         }
     }
 
-    private void run() {
+    private void run_shuabao() {
 
         new Thread(new Runnable() {
             @Override
@@ -78,16 +83,30 @@ public class SwipeService extends AccessibilityService {
                 while (flag) {
                     String command = "input swipe 550 1450 550 700";
                     execShellCmd(command);
-                    int random = (int) (Math.random() * (10 - 3) + 3) * 1000;
-                    Log.e("SwipeService", "执行了一次= " + random);
+                    int random = (int) (Math.random() * (25 - 10) + 10) * 1000;
+                    Log.e("SwipeService", "刷宝执行了一次= " + random);
 
                     SystemClock.sleep(random);
 
+                }
+            }
+        }).start();
 
 
-                    String back = "input keyevent 4";
-                    execShellCmd(back);
-                    SystemClock.sleep(50);
+    }
+
+    private void run_weishi() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (flag) {
+                    String command = "input swipe 550 1450 550 700";
+                    execShellCmd(command);
+                    int random = (int) (Math.random() * (10 - 5) + 5) * 1000;
+                    Log.e("SwipeService", "微视执行了一次= " + random);
+
+                    SystemClock.sleep(random);
                 }
             }
         }).start();

@@ -20,10 +20,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_start_shuabao).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post("start");
+                EventBus.getDefault().post("start_shuabao");
+            }
+        });
+
+        findViewById(R.id.btn_start_weishi).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post("start_weishi");
             }
         });
 
