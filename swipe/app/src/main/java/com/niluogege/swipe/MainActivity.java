@@ -7,6 +7,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.niluogege.swipe.assist.impl.ShuaBaoAssist;
+
 import org.greenrobot.eventbus.EventBus;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EventBus.getDefault().post("start_shuabao");
+
+                startActivity(getPackageManager().getLaunchIntentForPackage(ShuaBaoAssist.PACKAGE_SHUA_BAO));
+
                 onBackPressed();
             }
         });

@@ -15,7 +15,7 @@ import java.util.List;
  * Created by niluogege on 2019/11/22.
  */
 public class ShuaBaoAssist extends Assist {
-    private static final String PACKAGE_SHUA_BAO = "com.jm.video";
+    public static final String PACKAGE_SHUA_BAO = "com.jm.video";
 
     private boolean isStart = false;//是否已启动
 
