@@ -19,10 +19,10 @@ import java.util.List;
 /**
  * Created by niluogege on 2019/11/22.
  */
-public class ShuaBaoAssist extends Assist {
-    public static final String PACKAGE_SHUA_BAO = "com.jm.video";
-    private static final int START_VALUE = 10;
-    private static final int END_VALUE = 25;
+public class WeishiAssist extends Assist {
+    public static final String PACKAGE_WEISHI = "com.tencent.weishi";
+    private static final int START_VALUE = 5;
+    private static final int END_VALUE = 10;
 
     private SwipeService mService;
     private boolean isStart = false;//是否已启动
@@ -31,7 +31,7 @@ public class ShuaBaoAssist extends Assist {
     private AccessibilityService.GestureResultCallback mGestureResultCallback;
 
 
-    public ShuaBaoAssist(SwipeService service) {
+    public WeishiAssist(SwipeService service) {
         mService = service;
         belowN();
     }
@@ -40,7 +40,7 @@ public class ShuaBaoAssist extends Assist {
     public void execute(AccessibilityEvent event) {
         if (mService != null) {
             CharSequence name = event.getPackageName();
-            if (TextUtils.equals(PACKAGE_SHUA_BAO, name)) {
+            if (TextUtils.equals(PACKAGE_WEISHI, name)) {
                 AccessibilityNodeInfo root = mService.getRootInActiveWindow();
                 if (root != null) {
                     final List<AccessibilityNodeInfo> lists = root.findAccessibilityNodeInfosByViewId("com.jm.video:id/list");

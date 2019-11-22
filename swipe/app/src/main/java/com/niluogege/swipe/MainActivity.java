@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.niluogege.swipe.assist.impl.ShuaBaoAssist;
+import com.niluogege.swipe.assist.impl.WeishiAssist;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -18,21 +20,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        findViewById(R.id.btn_start_service).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSwipeService();
+            }
+        });
+
         findViewById(R.id.btn_start_shuabao).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post("start_shuabao");
-
-                startActivity(getPackageManager().getLaunchIntentForPackage(ShuaBaoAssist.PACKAGE_SHUA_BAO));
-
-                onBackPressed();
+                startShuaBao();
             }
         });
 
         findViewById(R.id.btn_start_weishi).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post("start_weishi");
+                startWeiShi();
             }
         });
 
@@ -52,9 +57,24 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    private void startShuaBao() {
+        EventBus.getDefault().post("start_shuabao");
+
+        startActivity(getPackageManager().getLaunchIntentForPackage(ShuaBaoAssist.PACKAGE_SHUA_BAO));
+
+        onBackPressed();
+    }
+
+    private void startWeiShi() {
+        EventBus.getDefault().post("start_weishi");
+
+        startActivity(getPackageManager().getLaunchIntentForPackage(WeishiAssist.PACKAGE_WEISHI));
+
+        onBackPressed();
+    }
+
+
+    private void startSwipeService() {
         if (!SwipeService.isStart()) {
             try {
                 this.startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
@@ -62,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
                 this.startActivity(new Intent(Settings.ACTION_SETTINGS));
                 e.printStackTrace();
             }
+        } else {
+            Toast.makeText(this, "服务已经启动了", Toast.LENGTH_LONG).show();
         }
     }
 }

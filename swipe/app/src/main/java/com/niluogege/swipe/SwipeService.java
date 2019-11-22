@@ -7,6 +7,7 @@ import android.view.accessibility.AccessibilityEvent;
 
 import com.niluogege.swipe.assist.Assist;
 import com.niluogege.swipe.assist.impl.ShuaBaoAssist;
+import com.niluogege.swipe.assist.impl.WeishiAssist;
 import com.niluogege.swipe.assist.impl.XhjAssist;
 
 import org.greenrobot.eventbus.EventBus;
@@ -70,8 +71,7 @@ public class SwipeService extends AccessibilityService {
                 break;
 
             case "start_weishi":
-                flag = true;
-                run_weishi();
+                assist = new WeishiAssist(this);
                 break;
 
             case "start_test":
