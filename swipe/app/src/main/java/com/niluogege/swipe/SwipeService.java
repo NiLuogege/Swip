@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.niluogege.swipe.assist.Assist;
+import com.niluogege.swipe.assist.impl.ShuaBaoAssist;
 import com.niluogege.swipe.assist.impl.XhjAssist;
 
 import org.greenrobot.eventbus.EventBus;
@@ -45,6 +46,8 @@ public class SwipeService extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         if (event != null) {
+            Log.d("SwipeService", "event= " + event.toString());
+
             if (assist != null) {
                 assist.execute(this, event);
             }
@@ -63,8 +66,7 @@ public class SwipeService extends AccessibilityService {
         this.type = event;
         switch (event) {
             case "start_shuabao":
-                flag = true;
-                run_shuabao();
+                assist = new ShuaBaoAssist();
                 break;
 
             case "start_weishi":
@@ -84,8 +86,6 @@ public class SwipeService extends AccessibilityService {
                 break;
         }
     }
-
-
 
 
     private void run_shuabao() {

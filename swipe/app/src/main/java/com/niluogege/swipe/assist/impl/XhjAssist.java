@@ -14,10 +14,8 @@ import java.util.List;
 /**
  * Created by niluogege on 2019/11/22.
  */
-public class XhjAssist implements Assist {
+public class XhjAssist extends Assist {
     private static final String PACKAGE_XHJ = "com.aihuishou.airent";
-
-    private long nextTime;
 
     @Override
     public void execute(AccessibilityService service, AccessibilityEvent event) {

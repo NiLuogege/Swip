@@ -6,6 +6,8 @@ import android.view.accessibility.AccessibilityEvent;
 /**
  * Created by niluogege on 2019/11/22.
  */
-public interface Assist {
-    void execute(AccessibilityService service, AccessibilityEvent event);
+public abstract class Assist {
+    protected long nextTime;
+
+    public abstract void execute(AccessibilityService service, AccessibilityEvent event);
 }
