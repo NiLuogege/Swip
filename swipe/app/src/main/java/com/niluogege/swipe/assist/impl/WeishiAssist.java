@@ -43,7 +43,7 @@ public class WeishiAssist extends Assist {
             if (TextUtils.equals(PACKAGE_WEISHI, name)) {
                 AccessibilityNodeInfo root = mService.getRootInActiveWindow();
                 if (root != null) {
-                    final List<AccessibilityNodeInfo> lists = root.findAccessibilityNodeInfosByViewId("com.jm.video:id/list");
+                    final List<AccessibilityNodeInfo> lists = root.findAccessibilityNodeInfosByViewId("com.tencent.weishi:id/feeds_view_pager");
 
                     if (lists != null && lists.size() > 0) {
                         if (!isStart) {
