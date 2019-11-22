@@ -58,19 +58,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startShuaBao() {
-        EventBus.getDefault().post("start_shuabao");
+        if (SwipeService.isStart()) {
 
-        startActivity(getPackageManager().getLaunchIntentForPackage(ShuaBaoAssist.PACKAGE_SHUA_BAO));
+            EventBus.getDefault().post("start_shuabao");
 
-        onBackPressed();
+            startActivity(getPackageManager().getLaunchIntentForPackage(ShuaBaoAssist.PACKAGE_SHUA_BAO));
+
+            onBackPressed();
+        } else {
+            Toast.makeText(this, "请先启动服务", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void startWeiShi() {
-        EventBus.getDefault().post("start_weishi");
+        if (SwipeService.isStart()) {
 
-        startActivity(getPackageManager().getLaunchIntentForPackage(WeishiAssist.PACKAGE_WEISHI));
+            EventBus.getDefault().post("start_weishi");
 
-        onBackPressed();
+            startActivity(getPackageManager().getLaunchIntentForPackage(WeishiAssist.PACKAGE_WEISHI));
+
+            onBackPressed();
+        } else {
+            Toast.makeText(this, "请先启动服务", Toast.LENGTH_LONG).show();
+        }
     }
 
 
@@ -86,4 +96,5 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "服务已经启动了", Toast.LENGTH_LONG).show();
         }
     }
+
 }
