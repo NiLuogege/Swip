@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.niluogege.swipe.assist.impl.KuaiShowAssist;
 import com.niluogege.swipe.assist.impl.ShuaBaoAssist;
 import com.niluogege.swipe.assist.impl.WeishiAssist;
 
@@ -41,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btn_start_kuaishow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startKuaiShow();
+            }
+        });
+
         findViewById(R.id.btn_start_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +63,19 @@ public class MainActivity extends AppCompatActivity {
                 EventBus.getDefault().post("stop");
             }
         });
+    }
+
+    private void startSwipeService() {
+        if (!SwipeService.isStart()) {
+            try {
+                this.startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
+            } catch (Exception e) {
+                this.startActivity(new Intent(Settings.ACTION_SETTINGS));
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(this, "服务已经启动了", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void startShuaBao() {
@@ -83,18 +104,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void startKuaiShow() {
+        if (SwipeService.isStart()) {
 
-    private void startSwipeService() {
-        if (!SwipeService.isStart()) {
-            try {
-                this.startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
-            } catch (Exception e) {
-                this.startActivity(new Intent(Settings.ACTION_SETTINGS));
-                e.printStackTrace();
-            }
+            EventBus.getDefault().post("start_kuaishow");
+
+            startActivity(getPackageManager().getLaunchIntentForPackage(KuaiShowAssist.PACKAGE_KUAI_SHOW));
+
+            onBackPressed();
         } else {
-            Toast.makeText(this, "服务已经启动了", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "请先启动服务", Toast.LENGTH_LONG).show();
         }
     }
+
+
+
 
 }

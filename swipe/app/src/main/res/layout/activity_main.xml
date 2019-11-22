@@ -29,6 +29,13 @@
         android:text="微视开始" />
 
     <Button
+        android:id="@+id/btn_start_kuaishow"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:text="快手极速版开始" />
+
+    <Button
         android:id="@+id/btn_start_test"
         android:layout_width="match_parent"
         android:layout_height="40dp"

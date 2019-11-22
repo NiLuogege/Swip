@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.niluogege.swipe.assist.Assist;
+import com.niluogege.swipe.assist.impl.KuaiShowAssist;
 import com.niluogege.swipe.assist.impl.ShuaBaoAssist;
 import com.niluogege.swipe.assist.impl.WeishiAssist;
 import com.niluogege.swipe.assist.impl.XhjAssist;
@@ -72,6 +73,10 @@ public class SwipeService extends AccessibilityService {
 
             case "start_weishi":
                 assist = new WeishiAssist(this);
+                break;
+
+            case "start_kuaishow":
+                assist = new KuaiShowAssist(this);
                 break;
 
             case "start_test":
