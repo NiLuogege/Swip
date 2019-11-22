@@ -34,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btn_start_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post("start_test");
+            }
+        });
+
         findViewById(R.id.btn_stop).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

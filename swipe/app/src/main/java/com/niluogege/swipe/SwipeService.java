@@ -4,6 +4,7 @@ import android.accessibilityservice.AccessibilityService;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityNodeInfo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -14,6 +15,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -43,12 +45,27 @@ public class SwipeService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        if (event != null) {
+            Log.d("SwipeService", "action:" + event.toString());
 
+
+            AccessibilityNodeInfo root = getRootInActiveWindow();
+
+            List<AccessibilityNodeInfo> viewPagers = root.findAccessibilityNodeInfosByViewId("com.aihuishou.airent:id/vp");
+
+            Log.e("SwipeService", "viewPagers.size():" + viewPagers.size());
+            if (viewPagers.size() > 0) {
+
+
+                viewPagers.get(1).performAction(AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD);
+            }
+
+        }
     }
 
     @Override
     public void onInterrupt() {
-
+        Log.e("SwipeService", "onInterrupt");
     }
 
 
@@ -66,6 +83,10 @@ public class SwipeService extends AccessibilityService {
                 run_weishi();
                 break;
 
+            case "start_test":
+                test();
+                break;
+
             case "stop":
                 flag = false;
                 break;
@@ -74,6 +95,25 @@ public class SwipeService extends AccessibilityService {
                 break;
         }
     }
+
+
+    private void test() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                AccessibilityNodeInfo root = getRootInActiveWindow();
+                List<AccessibilityNodeInfo> viewPagers = root.findAccessibilityNodeInfosByViewId("com.jm.video:id/list");
+                List<AccessibilityNodeInfo> viewPagers2 = root.findAccessibilityNodeInfosByViewId("com.jm.video:id/mmViewPager");
+                Log.e("SwipeService", "viewPagers.size():" + viewPagers.size() + " viewPagers2=" + viewPagers2.size());
+                if (viewPagers.size() > 0) {
+                    viewPagers.get(0).performAction(AccessibilityNodeInfo.ACTION_NEXT_AT_MOVEMENT_GRANULARITY);
+                }
+            }
+        }).start();
+
+    }
+
 
     private void run_shuabao() {
 
