@@ -21,6 +21,8 @@ import java.util.List;
  */
 public class ShuaBaoAssist extends Assist {
     public static final String PACKAGE_SHUA_BAO = "com.jm.video";
+    private static final int startValue = 10;
+    private static final int endValue = 25;
 
     private SwipeService mService;
     private boolean isStart = false;//是否已启动
@@ -35,11 +37,11 @@ public class ShuaBaoAssist extends Assist {
     }
 
     @Override
-    public void execute(final AccessibilityService service, AccessibilityEvent event) {
-        if (service != null) {
+    public void execute(AccessibilityEvent event) {
+        if (mService != null) {
             CharSequence name = event.getPackageName();
             if (TextUtils.equals(PACKAGE_SHUA_BAO, name)) {
-                AccessibilityNodeInfo root = service.getRootInActiveWindow();
+                AccessibilityNodeInfo root = mService.getRootInActiveWindow();
                 if (root != null) {
                     final List<AccessibilityNodeInfo> lists = root.findAccessibilityNodeInfosByViewId("com.jm.video:id/list");
 
@@ -55,7 +57,7 @@ public class ShuaBaoAssist extends Assist {
                                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//api24 android7.0
                                                 Log.e("ShuaBaoAssist", "7.0以上");
 
-                                                service.dispatchGesture(mDescription, mGestureResultCallback, null);
+                                                mService.dispatchGesture(mDescription, mGestureResultCallback, null);
                                             } else {
                                                 Log.e("ShuaBaoAssist", "7.0以下");
 
@@ -63,7 +65,7 @@ public class ShuaBaoAssist extends Assist {
                                             }
 
 
-                                            int delayTime = (int) (Math.random() * (25 - 10) + 10) * 1000;
+                                            int delayTime = (int) (Math.random() * (endValue - startValue) + startValue) * 1000;
 
                                             Log.e("ShuaBaoAssist", "delayTime:" + delayTime);
                                             nextTime = currentTimeMillis + delayTime;

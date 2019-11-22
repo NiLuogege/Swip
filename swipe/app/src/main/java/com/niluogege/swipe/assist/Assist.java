@@ -1,6 +1,5 @@
 package com.niluogege.swipe.assist;
 
-import android.accessibilityservice.AccessibilityService;
 import android.view.accessibility.AccessibilityEvent;
 
 /**
@@ -9,5 +8,5 @@ import android.view.accessibility.AccessibilityEvent;
 public abstract class Assist {
     protected long nextTime;
 
-    public abstract void execute(AccessibilityService service, AccessibilityEvent event);
+    public abstract void execute(AccessibilityEvent event);
 }

@@ -1,11 +1,11 @@
 package com.niluogege.swipe.assist.impl;
 
-import android.accessibilityservice.AccessibilityService;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
+import com.niluogege.swipe.SwipeService;
 import com.niluogege.swipe.assist.Assist;
 
 import java.util.Date;
@@ -17,12 +17,19 @@ import java.util.List;
 public class XhjAssist extends Assist {
     private static final String PACKAGE_XHJ = "com.aihuishou.airent";
 
+
+    private SwipeService mService;
+
+    public XhjAssist(SwipeService mService) {
+        this.mService = mService;
+    }
+
     @Override
-    public void execute(AccessibilityService service, AccessibilityEvent event) {
-        if (service != null) {
+    public void execute(AccessibilityEvent event) {
+        if (mService != null) {
             CharSequence name = event.getPackageName();
             if (TextUtils.equals(PACKAGE_XHJ, name)) {
-                AccessibilityNodeInfo root = service.getRootInActiveWindow();
+                AccessibilityNodeInfo root = mService.getRootInActiveWindow();
                 if (root != null) {
                     List<AccessibilityNodeInfo> viewPagers = root.findAccessibilityNodeInfosByViewId("com.aihuishou.airent:id/vp");
                     if (viewPagers != null && viewPagers.size() >= 2) {

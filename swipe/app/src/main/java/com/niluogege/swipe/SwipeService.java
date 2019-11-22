@@ -49,7 +49,7 @@ public class SwipeService extends AccessibilityService {
             Log.d("SwipeService", "event= " + event.toString());
 
             if (assist != null) {
-                assist.execute(this, event);
+                assist.execute(event);
             }
         }
     }
@@ -75,7 +75,7 @@ public class SwipeService extends AccessibilityService {
                 break;
 
             case "start_test":
-                assist = new XhjAssist();
+                assist = new XhjAssist(this);
                 break;
 
             case "stop":
