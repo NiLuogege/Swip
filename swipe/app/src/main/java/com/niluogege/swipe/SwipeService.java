@@ -66,7 +66,7 @@ public class SwipeService extends AccessibilityService {
         this.type = event;
         switch (event) {
             case "start_shuabao":
-                assist = new ShuaBaoAssist();
+                assist = new ShuaBaoAssist(this);
                 break;
 
             case "start_weishi":
