@@ -1,6 +1,9 @@
 package com.niluogege.swipe;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
@@ -11,16 +14,65 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.niluogege.swipe.assist.impl.KuaiShowAssist;
 import com.niluogege.swipe.assist.impl.ShuaBaoAssist;
 import com.niluogege.swipe.assist.impl.WeishiAssist;
+import com.niluogege.swipe.utils.AppUtils;
+import com.niluogege.swipe.utils.LogUtil;
+import com.niluogege.swipe.utils.StringUtils;
+import com.niluogege.swipe.utils.Whitelist;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            RxPermissions rxPermissions = new RxPermissions(this);
+            rxPermissions
+                    .request(Manifest.permission.READ_PHONE_STATE)
+                    .subscribe(granted -> {
+                        if (granted) {
+
+                            String imei = AppUtils.getImeiUnderQ(this);
+                            String phoneNum = AppUtils.getPhoneNum(this);
+                            LogUtil.e("imei= " + imei + " phoneNum=" + phoneNum);
+
+                            Whitelist whitelist = new Whitelist();
+                            List<String> wl = Arrays.asList(whitelist.whiteDeivces);
+
+                            if (StringUtils.isNotEmpty(imei)) {
+                                if (wl.contains(imei)) {
+                                    initView();
+                                }else{
+                                    toastCantUse();
+                                }
+                            } else if (StringUtils.isNotEmpty(phoneNum)) {
+                                if (wl.contains(phoneNum)) {
+                                    initView();
+                                }else{
+                                    toastCantUse();
+                                }
+                            } else {
+                                initView();
+                            }
+
+                        }
+                    });
+        } else {
+            initView();
+        }
+
+
+    }
+
+    private void initView() {
         findViewById(R.id.btn_start_service).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +169,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    private void toastCantUse(){
+        Toast.makeText(this, "请先购买！", Toast.LENGTH_LONG).show();
+    }
 
 
 }
