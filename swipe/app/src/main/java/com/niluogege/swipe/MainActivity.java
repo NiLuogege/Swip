@@ -50,13 +50,13 @@ public class MainActivity extends AppCompatActivity {
                             if (StringUtils.isNotEmpty(imei)) {
                                 if (wl.contains(imei)) {
                                     initView();
-                                }else{
+                                } else {
                                     toastCantUse();
                                 }
                             } else if (StringUtils.isNotEmpty(phoneNum)) {
                                 if (wl.contains(phoneNum)) {
                                     initView();
-                                }else{
+                                } else {
                                     toastCantUse();
                                 }
                             } else {
@@ -77,6 +77,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startSwipeService();
+            }
+        });
+
+        findViewById(R.id.btn_stop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//api24 android7.0
+                    EventBus.getDefault().post("stop");
+                } else {
+                    openAccessibilitySettings();
+                }
+
             }
         });
 
@@ -109,24 +121,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.btn_stop).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getDefault().post("stop");
-            }
-        });
+
     }
 
     private void startSwipeService() {
         if (!SwipeService.isStart()) {
-            try {
-                this.startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
-            } catch (Exception e) {
-                this.startActivity(new Intent(Settings.ACTION_SETTINGS));
-                e.printStackTrace();
-            }
+            openAccessibilitySettings();
         } else {
             Toast.makeText(this, "服务已经启动了", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void openAccessibilitySettings() {
+        try {
+            this.startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
+        } catch (Exception e) {
+            this.startActivity(new Intent(Settings.ACTION_SETTINGS));
+            e.printStackTrace();
         }
     }
 
@@ -169,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void toastCantUse(){
+    private void toastCantUse() {
         Toast.makeText(this, "请先购买！", Toast.LENGTH_LONG).show();
     }
 

@@ -1,9 +1,11 @@
 package com.niluogege.swipe;
 
 import android.accessibilityservice.AccessibilityService;
+import android.os.Build;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
+import android.widget.Toast;
 
 import com.niluogege.swipe.assist.Assist;
 import com.niluogege.swipe.assist.impl.KuaiShowAssist;
@@ -84,7 +86,12 @@ public class SwipeService extends AccessibilityService {
                 break;
 
             case "stop":
-                flag = false;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    disableSelf();
+                    mService=null;
+                } else {
+                    Toast.makeText(this, "请手动关闭", Toast.LENGTH_LONG).show();
+                }
                 break;
 
             default:
